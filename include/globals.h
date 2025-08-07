@@ -26,3 +26,4 @@ const extern std::string STELARE_GUI_FOLDER;
 #endif
 
 extern std::vector<Package> PACKAGES;
+extern std::string selected_drive_letter;

@@ -58,7 +58,7 @@ class Package {
          *        key : File path in the archive for the file needed to be extracted.
          *        value : Output folder in the temp folder WITH FILENAME.
          */
-        std::map<std::string, std::map<std::string, std::string>> extract_file = {};
+        std::map<std::string, std::pair<std::string, std::string>> extract_file = {};
 
         /**
          * All archives after download needed to be extracted but only a single folder.
@@ -68,7 +68,7 @@ class Package {
          *        key : File path in the archive for the file needed to be extracted.
          *        value : Output folder in the temp folder WITH FILENAME.
          */
-        std::map<std::string, std::map<std::string, std::string>> extract_folder = {};
+        std::map<std::string, std::pair<std::string, std::string>> extract_folder = {};
 
         /**
          * All files needed to be moved from TEMP to EXECUTABLES

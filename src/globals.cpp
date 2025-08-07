@@ -13,3 +13,4 @@ const std::string STELARE_GUI_FOLDER = "gui/";
 #endif
 
 std::vector<Package> PACKAGES = {};
+std::string selected_drive_letter = "";
