@@ -1,5 +1,9 @@
 #pragma once
 
+#include <regex>
+
+void log_info( std::string message );
+bool verify_mac_address( std::string mac_address );
 
 #ifndef STELARE_CLI
 
