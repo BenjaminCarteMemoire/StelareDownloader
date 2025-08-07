@@ -3,4 +3,8 @@ project(Stelare_DL)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Stelare_DL src/main.cpp)
+add_executable(Stelare_DL src/main.cpp
+        include/globals.h
+        src/globals.cpp
+        include/utils.h
+        src/utils.cpp)
