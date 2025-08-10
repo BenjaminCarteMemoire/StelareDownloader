@@ -106,7 +106,7 @@ namespace Storage {
             log_info("[Download] Try Windows download from: " + url + " ;to: " + save_path );
             if ( URLDownloadToFile(NULL, url.c_str(), save_path.c_str(), 0, NULL) == S_OK )
                 return Codes::OK; // Download good.
-            return STORAGE__ERR_CANTDL; // Download failed.
+            return Codes::Cant_Open; // Download failed.
         #endif
 
         return Codes::OK; // What is your system ?
@@ -340,13 +340,13 @@ namespace Storage {
  */
     int do_a_backup_and_copy_folder_to_drive( std::string drive_path, std::string drive_folder, std::string temp_folder ) {
 
-        std::vector<std::string> files_in_temp_folder = get_file_list_recursively( fs::current_path().string() + "\\" + STORAGE_TEMP_FOLDER + "\\" + temp_folder );
+        std::vector<std::string> files_in_temp_folder = get_file_list_recursively( fs::current_path().string() + "\\" + STELARE_TEMP_FOLDER + "\\" + temp_folder );
         std::string drive_path_full = drive_path + drive_folder;
         do_a_backup(drive_path_full, files_in_temp_folder);
         for ( int j = 0; j < files_in_temp_folder.size(); j++ ) {
             fs::create_directories( fs::path( drive_path_full + files_in_temp_folder[j] ).parent_path() );
-            log_info( "[Copy] " + fs::current_path().string() + "\\" + STORAGE_TEMP_FOLDER + "\\" + temp_folder + "/" + files_in_temp_folder[j] + " to " + drive_path_full + files_in_temp_folder[j] );
-            fs::copy( fs::current_path().string() + "\\" + STORAGE_TEMP_FOLDER + "\\" + temp_folder + "/" + files_in_temp_folder[j], drive_path_full + files_in_temp_folder[j], fs::copy_options::update_existing );
+            log_info( "[Copy] " + fs::current_path().string() + "\\" + STELARE_TEMP_FOLDER + "\\" + temp_folder + "/" + files_in_temp_folder[j] + " to " + drive_path_full + files_in_temp_folder[j] );
+            fs::copy( fs::current_path().string() + "\\" + STELARE_TEMP_FOLDER + "\\" + temp_folder + "/" + files_in_temp_folder[j], drive_path_full + files_in_temp_folder[j], fs::copy_options::update_existing );
         }
         return Codes::OK;
 

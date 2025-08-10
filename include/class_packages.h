@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <vector>
+#include <map>
 
 #ifndef STELARE_CLI
 
