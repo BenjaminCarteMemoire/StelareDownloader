@@ -95,7 +95,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 .then(response => {
                     console.log( response );
                     if (response == true){
-                        webui.call("continue_package", input_mac.value );
+                        webui.call("continue", input_mac.value );
                     }
                 });
         }
@@ -111,7 +111,7 @@ window.addEventListener('DOMContentLoaded', () => {
             if( typeof version_selector.value == "undefined" || version_selector.value == "" || typeof region_selector.value == "undefined" || region_selector.value == ""  )
                 return;
 
-            webui.call("continue_package", version_selector.value + region_selector.value );
+            webui.call("continue", version_selector.value + region_selector.value );
             // window.close();
 
         }

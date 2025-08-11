@@ -4,13 +4,23 @@
 #include <vector>
 #include <map>
 
-#include "globals.h"
-
 #ifndef STELARE_CLI
 
 #include "../lib/webui/include/webui.hpp"
 
+#else
+
+#include "cli.h"
+
 #endif
+
+enum Package_Category {
+
+    Pack = 0,
+    Exe = 1,
+    Tools = 999
+
+};
 
 class Package {
 
@@ -27,6 +37,11 @@ class Package {
         std::string pretty_name;
 
         /**
+         * Identifier letter for CLI. (In upper case)
+         */
+        char identifier;
+
+        /**
          * Category of the package.
          */
         Package_Category category;
@@ -39,6 +54,15 @@ class Package {
          * Vector of Window->event functions.
          */
         std::vector<std::function<void( webui::window::event* e )>> callbacks = {};
+
+        #else
+
+        /**
+        * Callbacks needed to be called in order.
+        *
+        * Vector of map (optionnal) functions.
+        */
+        std::vector<std::function<void( std::map<std::string, std::string> add )>> callbacks = {};
 
         #endif
 
@@ -103,6 +127,7 @@ class Package {
 
             std::string package_name,
             std::string package_pretty_name,
+            char identifier,
             Package_Category category
 
         );

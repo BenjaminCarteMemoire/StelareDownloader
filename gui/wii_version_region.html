@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr" style="background-image: url('assets/images/background.png');">
+<head>
+  <meta charset="UTF-8">
+  <title>Stelare - Région et version de la Wii.</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header>
+  <img src="assets/images/stelare_logo.png">
+</header>
+<div class="main">
+  <h2>Sélectionner la région, ainsi que la version de votre Wii.</h2>
+  <div class="separator"></div>
+  <div class="table_download">
+    <select id="version_selector" class="selector">
+      <option value="4.3">4.3</option>
+      <option value="4.2">4.2</option>
+      <option value="4.1">4.1</option>
+      <option value="4.0">4.0</option>
+      <option value="3.5">3.5</option>
+      <option value="3.4">3.4</option>
+      <option value="3.3">3.3</option>
+      <option value="3.2">3.2</option>
+      <option value="3.1">3.1</option>
+      <option value="3.0">3.0</option>
+    </select>
+    <select id="region_selector" class="selector">
+      <option value="E">E (Europe)</option>
+      <option value="U">U (USA)</option>
+      <option value="J">J (Japan)</option>
+      <option value="K">K (Korea)</option>
+    </select>
+    <div id="valid_version_region" class="download_button">Sélectionner ces paramètres</div>
+    <!-- <div id="warning_text" style="margin-top:2%;color:red;font-weight: 700;text-decoration: underline;">Faites attention au lecteur sélectionné ! Vérifiez le via l'explorateur de fichiers !</div> -->
+  </div>
+</div>
+<script src="./webui.js"></script>
+<script src="assets/js/script.js"></script>
+</body>
+</html>

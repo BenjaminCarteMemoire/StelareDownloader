@@ -3,14 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
-
-enum Package_Category {
-
-    Pack = 0,
-    Exe = 1,
-    Tools = 999
-
-};
+#include <unordered_map>
 
 #include "class_packages.h"
 
@@ -32,9 +25,15 @@ extern std::map<std::string, webui::window> WEBUI_WINDOWS;
 const extern std::string STELARE_GUI_FOLDER;
 extern std::unordered_map<std::string, Package*> WEBUI_BINDINGS_MAP;
 
+#else
+class Package;
 #endif
 
 extern std::vector<Package> PACKAGES;
 extern std::string selected_drive_letter;
+extern std::string version;
+extern std::string region;
+extern std::string version_region;
+extern std::string mac_address;
 
 extern std::vector<std::string> SUMMARY;

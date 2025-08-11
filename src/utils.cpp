@@ -1,5 +1,6 @@
 #include "../include/globals.h"
 #include "../include/utils.h"
+#include <ctime>
 
 /**
  * Log some info in the console.
@@ -23,6 +24,14 @@ bool verify_mac_address( std::string mac_address ) {
     std::regex mac_regex("^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$");
     return std::regex_match(mac_address, mac_regex);
 
+}
+
+std::string today_date() {
+    std::time_t now = std::time(nullptr);
+    std::tm* tm_local = std::localtime(&now);
+    char buffer[11]; // MM/DD/YYYY + null
+    std::strftime(buffer, sizeof(buffer), "%m/%d/%Y", tm_local);
+    return std::string(buffer);
 }
 
 #ifndef STELARE_CLI

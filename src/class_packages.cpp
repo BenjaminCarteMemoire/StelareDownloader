@@ -6,6 +6,10 @@
 
 #include "../include/gui.h"
 
+#else
+
+#include "../include/cli.h"
+
 #endif
 
 #ifdef _WIN32
@@ -14,10 +18,11 @@
 #include <io.h>
 #endif
 
-Package::Package(std::string package_name, std::string package_pretty_name, Package_Category category) {
+Package::Package(std::string package_name, std::string package_pretty_name, char identifier, Package_Category category) {
 
     this->name = package_name;
     this->pretty_name = package_pretty_name;
+    this->identifier = identifier;
     this->category = category;
 
 }
@@ -94,4 +99,3 @@ void Package::add_in_package_global() {
     PACKAGES.push_back( *this );
 
 }
-

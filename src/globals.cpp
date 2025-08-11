@@ -15,5 +15,9 @@ std::unordered_map<std::string, Package*> WEBUI_BINDINGS_MAP = {};
 
 std::vector<Package> PACKAGES = {};
 std::string selected_drive_letter = "";
+std::string version = "";
+std::string region = "";
+std::string version_region = "";
+std::string mac_address = "";
 
 std::vector<std::string> SUMMARY = {};
