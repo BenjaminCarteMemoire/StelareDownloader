@@ -4,6 +4,14 @@
 #include <vector>
 #include <map>
 
+enum Package_Category {
+
+    Pack = 0,
+    Exe = 1,
+    Tools = 999
+
+};
+
 #include "class_packages.h"
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -22,6 +30,7 @@ const extern std::string STELARE_EXE_FOLDER;
 extern webui::window MAIN;
 extern std::map<std::string, webui::window> WEBUI_WINDOWS;
 const extern std::string STELARE_GUI_FOLDER;
+extern std::unordered_map<std::string, Package*> WEBUI_BINDINGS_MAP;
 
 #endif
 

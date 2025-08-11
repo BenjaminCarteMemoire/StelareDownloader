@@ -10,6 +10,8 @@ namespace GUI_Tools {
 
     void return_drive_letters( webui::window::event* e );
 
+    void bind_main_window_events();
+
 }
 
 void select_drive_letter_window( webui::window::event::handler::callback_t callback );

@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
         if( window.location.href.includes( "select_drive.html" ) ) {
 
             // Get drive letters available.
-            webui.call('spc_drive_letters')
+            webui.call('get_drives')
                 .then(response => {
                     console.log( response );
                     drive_letters = JSON.parse(response);
@@ -76,7 +76,7 @@ window.addEventListener('DOMContentLoaded', () => {
            if( typeof selector.value == "undefined" || selector.value == "" )
                return;
 
-           webui.call("continue_package", selector.value);
+           webui.call("continue", selector.value);
            // window.close();
 
         }

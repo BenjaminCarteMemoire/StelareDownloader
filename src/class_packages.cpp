@@ -14,10 +14,11 @@
 #include <io.h>
 #endif
 
-Package::Package(std::string package_name, std::string package_pretty_name) {
+Package::Package(std::string package_name, std::string package_pretty_name, Package_Category category) {
 
     this->name = package_name;
     this->pretty_name = package_pretty_name;
+    this->category = category;
 
 }
 
@@ -85,8 +86,6 @@ void Package::automatic_process() {
         }
 
     }
-
-
 
 }
 

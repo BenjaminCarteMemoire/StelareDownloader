@@ -10,27 +10,27 @@
 
 void prepare_packages() {
 
-    Package Uninstall_CFW( "uninstall_cfw", "3DS / Retirer le hack" );
+    static Package Uninstall_CFW( "uninstall_cfw", "3DS / Retirer le hack", Package_Category::Pack );
 
     // Step 1.
-    Uninstall_CFW.callbacks.push_back([&Uninstall_CFW](webui::window::event*e) {
-
-        static Package* ptr_Uninstall_CFW = &Uninstall_CFW;
+    Uninstall_CFW.callbacks.push_back([](webui::window::event*e) {
 
         log_info( "[Pack] Begin Uninstall CFW" );
         if ( Uninstall_CFW.callbacks.size() >= 2 )
-            select_drive_letter_window( [](webui::window::event *e) { ptr_Uninstall_CFW->callbacks[1](e); } );
+            select_drive_letter_window( [](webui::window::event *e) { Uninstall_CFW.callbacks[1](e); } );
         else
             log_info( "Problem with Uninstall CFW Package callbacks." );
 
     });
 
     // Step 2.
-    Uninstall_CFW.callbacks.push_back([&Uninstall_CFW](webui::window::event*e) {
+    Uninstall_CFW.callbacks.push_back([](webui::window::event*e) {
 
         selected_drive_letter = e->get_string();
         GUI_Tools::close_a_window( "Drive_Letter" );
         Uninstall_CFW.automatic_process();
+        job_done();
+        webui::wait();
 
     });
 

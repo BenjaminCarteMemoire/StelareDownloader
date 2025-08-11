@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr" style="background-image: url('assets/images/background.png');">
+<head>
+  <meta charset="utf-8">
+  <title>Stelare - Processus en cours...</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header>
+  <img src="assets/images/stelare_logo.png">
+</header>
+<div class="main">
+  <h2 id="title_text">Veuillez patienter...</h2>
+  <h4 id="warning_text" style="color:red;">Ne fermez pas cette fenêtre !</h4>
+  <div class="separator"></div>
+  <div class="table_download">
+    <div class="loader-container">
+      <div id="loader_bar" class="loader">
+        <div class="inner-circle"></div>
+      </div>
+      <div id="success_mark" class="check" style="display:none;"></div>
+    </div>
+    <span id="waiting_text" class="waiting_text" style="margin-bottom: 2%"></span>
+  </div>
+  <div id="sep1" class="separator" style="display:none;"></div>
+  <h4 id="summary_text" style="display:none;">Résumé des actions</h4>
+  <div id="sep2" class="separator" style="display:none;"></div>
+  <p id="summary" style="display:none;"></p>
+</div>
+<script src="./webui.js"></script>
+<script src="assets/js/script.js"></script>
+</body>
+</html>

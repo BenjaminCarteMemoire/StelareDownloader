@@ -9,6 +9,7 @@ const std::string STELARE_EXE_FOLDER = "executables";
 webui::window MAIN;
 std::map<std::string, webui::window> WEBUI_WINDOWS = {};
 const std::string STELARE_GUI_FOLDER = "gui/";
+std::unordered_map<std::string, Package*> WEBUI_BINDINGS_MAP = {};
 
 #endif
 

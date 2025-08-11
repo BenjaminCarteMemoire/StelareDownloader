@@ -28,11 +28,23 @@ namespace GUI_Tools {
 
     }
 
+    void global_callback_for_packages( webui::window::event *e ) {
+
+        auto iterator = WEBUI_BINDINGS_MAP.find( e->element );
+        if ( iterator != WEBUI_BINDINGS_MAP.end() ) {
+            if (iterator->second->callbacks.size() >= 1 )
+                iterator->second->callbacks[0](e);
+        }
+
+    }
+
     void bind_main_window_events() {
 
-        for ( auto package: PACKAGES ) {
-            if ( package.callbacks.size() >= 1 )
-                MAIN.bind( package.name, package.callbacks[0] );
+        for ( auto& package: PACKAGES ) {
+            if ( package.callbacks.size() >= 1 ) {
+                WEBUI_BINDINGS_MAP[package.name] = &package;
+                MAIN.bind( package.name, global_callback_for_packages );
+            }
         }
 
     }
@@ -73,9 +85,9 @@ void processing_window() {
 
 void change_status( std::string new_status )  {
 
-    if ( WEBUI_WINDOWS.find( "Processing" ) != WEBUI_WINDOWS.end() )
-        WEBUI_WINDOWS["Processing" ].run( "document.getElementById('waiting_text').innterHTML = '" + new_status + "'" );
-    else
+    if ( WEBUI_WINDOWS.find( "Processing" ) != WEBUI_WINDOWS.end() ) {
+        WEBUI_WINDOWS["Processing" ].run( "document.getElementById('waiting_text').innerHTML = '" + new_status + "'" );
+    } else
         std::cout << "Can't change status. Processing not loaded." << std::endl;
 
     SUMMARY.push_back( new_status );

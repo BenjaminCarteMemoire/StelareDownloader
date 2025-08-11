@@ -4,6 +4,8 @@
 #include <vector>
 #include <map>
 
+#include "globals.h"
+
 #ifndef STELARE_CLI
 
 #include "../lib/webui/include/webui.hpp"
@@ -23,6 +25,11 @@ class Package {
          * Visual name of the package.
          */
         std::string pretty_name;
+
+        /**
+         * Category of the package.
+         */
+        Package_Category category;
 
         #ifndef STELARE_CLI
 
@@ -95,7 +102,8 @@ class Package {
         Package(
 
             std::string package_name,
-            std::string package_pretty_name
+            std::string package_pretty_name,
+            Package_Category category
 
         );
 
