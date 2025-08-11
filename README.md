@@ -5,6 +5,8 @@
 A Downloader helper in French for some console hacking tools and emulator tools. From Stelare website.
 Packages available : MSET9 (From official Github), Uninstall CFW scripts (3DS), Wilbrand (Easy use), GUIFormat.
 
+**If you have some DLLs problems, please install these redistribuables : https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170**
+
 This executable have two variants :
  - **WEBUI Interface window** : Modern WebUI interface using the "best browser". (Mostly edge). Works on Windows 10 and 11.
  - **CLI (Command-Line Interface)** : UI in the terminal. Works on Windows 7 and after.
