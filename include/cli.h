@@ -10,6 +10,8 @@ namespace CLI {
 
     char select_pack();
 
+    void warning( std::function<void(std::map<std::string, std::string> add)> callback );
+
     void drive_letter_prompt( std::function<void(std::map<std::string, std::string> add)> callback );
 
     void wii_mac_address_prompt( std::function<void(std::map<std::string, std::string> add)> callback );

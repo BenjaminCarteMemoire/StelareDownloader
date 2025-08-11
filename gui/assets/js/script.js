@@ -29,10 +29,12 @@ window.addEventListener('DOMContentLoaded', () => {
     function when_webui_is_connected(){
 
         if( !webui_connected ) return;
-        console.log( "OK!" );
 
-        console.log( window.location.href );
-        console.log( window.location.href.includes( "select_drive.html" ) );
+        if( window.location.href.includes( "index.html" ) ){
+
+            handle_warnings_button();
+
+        }
 
         if( window.location.href.includes( "select_drive.html" ) ) {
 
@@ -57,6 +59,21 @@ window.addEventListener('DOMContentLoaded', () => {
 
             valid_wii_version_region();
 
+        }
+
+    }
+
+    function handle_warnings_button(){
+
+        const elements = { "warn_clear_cache": "clear_cache" };
+
+        for( const [key, value] of Object.entries(elements)){
+            document.getElementById(key).onclick = function(e){
+
+                e.preventDefault();
+                if( confirm( "Êtes-vous sûr de vouloir effectuer cette action ?" ) )
+                    webui.call( value );
+            }
         }
 
     }

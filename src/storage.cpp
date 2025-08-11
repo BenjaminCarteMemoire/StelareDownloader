@@ -372,4 +372,13 @@ namespace Storage {
 
     }
 
+    int clear_folder( std::string folder_name ) {
+
+        if (fs::exists( folder_name ) ) {
+            fs::remove_all( folder_name );
+            return 0;
+        }
+        return 1;
+    }
+
 }

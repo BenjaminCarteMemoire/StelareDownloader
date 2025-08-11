@@ -36,6 +36,8 @@ namespace Storage {
 
     int move_to_executables( std::string temp_file );
 
+    int clear_folder( std::string folder_name );
+
 }
 
 #endif

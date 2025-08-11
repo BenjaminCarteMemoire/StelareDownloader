@@ -16,6 +16,7 @@ constexpr bool IS_WINDOWS = false;
 const extern std::string STELARE_TEMP_FOLDER;
 const extern std::string STELARE_BACKUP_FOLDER;
 const extern std::string STELARE_EXE_FOLDER;
+const extern int STELARE_TIME_WAIT;
 
 #ifndef STELARE_CLI
 #include "../lib/webui/include/webui.hpp"

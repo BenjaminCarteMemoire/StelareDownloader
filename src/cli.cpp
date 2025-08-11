@@ -87,7 +87,8 @@ namespace CLI {
                 std::cout << package.identifier << " : " << package.pretty_name << std::endl;
             }
         }
-        std::cout << std::endl << std::endl;
+        std::cout << std::endl;
+        std::cout << "Autres actions." << std::endl << std::endl;
         for ( auto package: PACKAGES ) {
             if ( package.category == Package_Category::Tools ) {
                 std::cout << package.identifier << " : " << package.pretty_name << std::endl;
@@ -102,6 +103,19 @@ namespace CLI {
         std::cin >> select;
 
         return select;
+
+    }
+
+    void warning( std::function<void(std::map<std::string, std::string> add)> callback ) {
+
+        char c;
+        CLI_Tools::separator();
+        std::cout << "Êtes-vous sûr de vouloir effectuer cette action ? [o/N] ";
+        std::cin >> c;
+
+        if ( c == 'o' || c == 'O' || c == 'y' || c == 'Y' )
+            callback({});
+        return;
 
     }
 

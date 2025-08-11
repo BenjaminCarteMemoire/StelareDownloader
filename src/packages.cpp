@@ -1,11 +1,18 @@
 #include "../include/packages.h"
 #include "../include/class_packages.h"
 #include "../include/globals.h"
+#include "../include/storage.h"
 #include "../include/utils.h"
 
 #ifndef STELARE_CLI
 #include "../lib/webui/include/webui.hpp"
 #include "../include/gui.h"
+#endif
+
+#ifdef _WIN32
+#include <winsock2.h>
+#include <windows.h>
+#include <io.h>
 #endif
 
 void prepare_packages() {
@@ -357,5 +364,52 @@ void prepare_packages() {
     };
 
     GUIFormat.add_in_package_global();
+
+    // ==================== CLEAR CACHE TOOL ====================
+
+    static Package Clear_Cache( "clear_cache", "Vider le cache / backup / exécutable", 'C', Package_Category::Tools );
+
+    #ifndef STELARE_CLI
+
+    Clear_Cache.callbacks.push_back([](webui::window::event *e ) {
+
+        std::vector<std::string> folders_clear = { STELARE_TEMP_FOLDER, STELARE_BACKUP_FOLDER, STELARE_EXE_FOLDER };
+
+        processing_window();
+        Sleep( STELARE_TIME_WAIT );
+        for ( auto folder: folders_clear ) {
+            change_status( "Suppression des fichiers de : " + folder );
+            Storage::clear_folder( folder );
+        }
+        job_done();
+
+    });
+
+    #else
+
+    Clear_Cache.callbacks.push_back([](std::map<std::string, std::string> add = {}) {
+
+        if ( Clear_Cache.callbacks.size() >= 2 )
+            CLI::warning( Clear_Cache.callbacks[1] );
+        else
+            log_info( "Problem with Clear_Cache Package callbacks." );
+
+    });
+
+    Clear_Cache.callbacks.push_back([](std::map<std::string, std::string> add = {}) {
+
+        std::vector<std::string> folders_clear = { STELARE_TEMP_FOLDER, STELARE_BACKUP_FOLDER, STELARE_EXE_FOLDER };
+
+        for ( auto folder: folders_clear ) {
+            change_status( "Suppression des fichiers de : " + folder );
+            Storage::clear_folder( folder );
+        }
+        job_done();
+
+    });
+
+    #endif
+
+    Clear_Cache.add_in_package_global();
 
 }

@@ -3,6 +3,7 @@
 const std::string STELARE_TEMP_FOLDER = "temp";
 const std::string STELARE_BACKUP_FOLDER = "backup";
 const std::string STELARE_EXE_FOLDER = "executables";
+const int STELARE_TIME_WAIT = 2000;
 
 #ifndef STELARE_CLI
 

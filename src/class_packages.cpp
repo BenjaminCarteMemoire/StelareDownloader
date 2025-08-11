@@ -31,7 +31,7 @@ void Package::automatic_process() {
 
     #ifndef STELARE_CLI
         processing_window();
-        Sleep( 2000 );
+        Sleep( STELARE_TIME_WAIT );
     #endif
 
     // Downloads...
