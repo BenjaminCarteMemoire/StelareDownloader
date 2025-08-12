@@ -19,6 +19,7 @@ This executable have two variants :
 ## Build
 
 To build Webui Interface : Execute "build.bat". (Using MSVC)
+(If you have 404 error from Webui interface when opening it, copy "gui" folder in the same folder that you execute the software) 
 To build CLI Interface : Execute "build_cli.bat" or define as constant "STELARE_CLI" and add "cli.h" (And remove "gui.h"). (Using MSVC)
 
 ## Thanks
