@@ -61,6 +61,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
         }
 
+        handle_explanations();
+
     }
 
     function handle_warnings_button(){
@@ -76,6 +78,24 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+    }
+
+    function handle_explanations(){
+
+        const explanations = document.getElementById( 'explanation_content' );
+        const arrow = document.getElementById('explanation_arrow');
+
+        document.getElementById( 'explanation_show' ).onclick = function(e){
+
+            if( explanations.style.display == "none" ){
+                explanations.style.display = "block";
+                arrow.innerHTML = "▼"
+            } else {
+                explanations.style.display = "none";
+                arrow.innerHTML = "►"
+            }
+
+        }
     }
 
     function drive_letters_as_select(){

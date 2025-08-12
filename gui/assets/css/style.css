@@ -11,8 +11,8 @@
 }
 
 html {
-    background-image: url("images/background.png");
     background-size: cover;
+    background-attachment: fixed;
     font-family: Roboto;
 }
 
@@ -54,6 +54,12 @@ header img {
 .separator {
 
     border: 1px solid white;
+
+}
+
+.sec_separator {
+
+    border: 1px dashed white;
 
 }
 
@@ -173,5 +179,38 @@ header img {
 
     font-weight: 100;
     font-size: 14px;
+
+}
+
+.explanations {
+
+    margin-top: 3%;
+}
+
+.explanation_title {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-decoration: none;
+
+}
+
+.explanation_title:hover {
+
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.explanation_content {
+
+    display: none;
+    padding: 2% 5% 2% 5%;
+    font-size: 14px;
+    margin-top: 3%;
 
 }
