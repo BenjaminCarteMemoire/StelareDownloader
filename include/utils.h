@@ -4,7 +4,7 @@
 
 void log_info( std::string message );
 bool verify_mac_address( std::string mac_address );
-std::string today_date();
+std::string yesterday_date();
 
 #ifndef STELARE_CLI
 

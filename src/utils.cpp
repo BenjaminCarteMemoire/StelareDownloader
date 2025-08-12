@@ -26,8 +26,8 @@ bool verify_mac_address( std::string mac_address ) {
 
 }
 
-std::string today_date() {
-    std::time_t now = std::time(nullptr);
+std::string yesterday_date() {
+    std::time_t now = std::time(nullptr) - 24 * 60 * 60;
     std::tm* tm_local = std::localtime(&now);
     char buffer[11]; // MM/DD/YYYY + null
     std::strftime(buffer, sizeof(buffer), "%m/%d/%Y", tm_local);

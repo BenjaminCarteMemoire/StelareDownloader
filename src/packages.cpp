@@ -247,7 +247,7 @@ void prepare_packages() {
 
         if ( IS_WINDOWS ) {
             change_status( "Exécution de : Wilbrand.exe" );
-            std::string command = std::string( STELARE_EXE_FOLDER ) + "\\Wilbrand.exe " + mac_address + " " + today_date() + " " + version_region + " " + selected_drive_letter;
+            std::string command = std::string( STELARE_EXE_FOLDER ) + "\\Wilbrand.exe " + mac_address + " " + yesterday_date() + " " + version_region + " " + selected_drive_letter;
             system( command.c_str() );
         }
 
@@ -305,7 +305,7 @@ void prepare_packages() {
 
         if ( IS_WINDOWS ) {
             change_status( "Exécution de : Wilbrand.exe" );
-            std::string command = std::string( STELARE_EXE_FOLDER ) + "\\Wilbrand.exe " + mac_address + " " + today_date() + " " + version_region + " " + selected_drive_letter;
+            std::string command = std::string( STELARE_EXE_FOLDER ) + "\\Wilbrand.exe " + mac_address + " " + yesterday_date() + " " + version_region + " " + selected_drive_letter;
             system( command.c_str() );
         }
 
