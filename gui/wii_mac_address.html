@@ -16,8 +16,19 @@
   <div class="table_download">
     <input type="text" id="mac_address" name="mac_address" class="input">
     <div id="valid_mac_address" class="download_button">Continuer</div>
-    <!-- <div id="warning_text" style="margin-top:2%;color:red;font-weight: 700;text-decoration: underline;">Faites attention au lecteur sélectionné ! Vérifiez le via l'explorateur de fichiers !</div>
-  </div> -->
+    <div class="explanations">
+      <div class="sec_separator"></div>
+      <div id="explanation_show" class="explanation_title">Comment savoir l'adresse MAC de ma Wii ? <span id="explanation_arrow">►</span></div>
+      <div class="sec_separator"></div>
+      <div id="explanation_content" class="explanation" style="display:none;"><p>
+        Si vous souhaitez connaitre l'adresse MAC de votre Wii, vous pouvez aller dans les options Wii, puis dans les paramètres Wii
+        <img src="assets/images/explanation_wii_menu.png" onclick="window.open('/assets/images/explanation_wii_menu.png')">
+        Allez dans la deuxième page, puis sélectionnez Internet.
+        <img src="assets/images/explanation_wii_internet.png" onclick="window.open('/assets/images/explanation_wii_internet.png')">
+        Enfin, sélectionnez "Informations Générales", et vous pouvez prendre l'adresse MAC (WLAN)
+        <img src="assets/images/explanation_wii_mac_address.png" onclick="window.open('/assets/images/explanation_wii_mac_address.png')">
+      </p></div>
+    </div>
 </div>
 <script src="./webui.js"></script>
 <script src="assets/js/script.js"></script>

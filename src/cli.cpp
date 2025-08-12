@@ -4,10 +4,12 @@
 #include <iomanip>
 #include <iostream>
 #include <vector>
+#include <limits>
 
 #include "../include/utils.h"
 
 #ifdef _WIN32
+#define NOMINMAX
 #include <winsock2.h>
 #include <windows.h>
 #endif
@@ -129,6 +131,7 @@ namespace CLI {
             char c;
 
             std::cout << "Sélectionner un lecteur." << std::endl << std::endl;
+            std::cout << "Pour vérifier à quelle lettre correspond votre lecteur, vérifiez cela dans l'explorateur de fichiers -> Ce PC." << std::endl << std::endl;
 
             for (int i = 0; i < removable_drives.size(); i++) {
                 std::cout << i << " : " << removable_drives[i] << std::endl;
@@ -139,6 +142,7 @@ namespace CLI {
             std::cout << std::endl;
             std::cout << "Votre choix : ";
             std::cin >> c;
+            std::cin.ignore((std::numeric_limits<std::streamsize>::max()), '\n');
 
             if ( c == 'q' || c == 'Q' )
                 return;
@@ -163,7 +167,7 @@ namespace CLI {
             std::string temp_mac_address;
 
             std::cout << "Entrez l'addresse MAC de votre Wii." << std::endl << std::endl;
-            std::cout << "Elle est trouvable dans les paramètres Internet de votre Wii.\nExemple: 01-23-45-67-89-AB" << std::endl;
+            std::cout << "La région de votre Wii est trouvable dans les Options Wii -> Paramètres Wii -> Internet -> Informations générales.\nPrenez celle qui correspond à WLAN. Exemple: 01-23-45-67-89-AB" << std::endl << std::endl;
             std::cout << std::endl << "Q : Retour à la page précédente" << std::endl;
             CLI_Tools::separator();
             std::cout << std::endl;
@@ -194,6 +198,7 @@ namespace CLI {
             char c;
 
             std::cout << "Sélectionner le numéro de version de votre Wii." << std::endl << std::endl;
+            std::cout << "La version de votre Wii est trouvable dans les Options Wii -> Paramètres Wii.\nIl est noté en haut à gauche (sans la lettre)." << std::endl << std::endl;
             for ( int i = 0; i < wii_version.size(); i++ ) {
                 std::cout << i << " : " + wii_version[i] << std::endl;
             }
@@ -203,6 +208,7 @@ namespace CLI {
             std::cout << std::endl;
             std::cout << "Votre choix : ";
             std::cin >> c;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
             if ( c == 'q' || c == 'Q' )
                 return;
@@ -230,7 +236,8 @@ namespace CLI {
 
             char c;
 
-            std::cout << "Sélectionner la région de votre Wii (Dans les paramètres systèmes)" << std::endl << std::endl;
+            std::cout << "Sélectionner la région de votre Wii" << std::endl << std::endl;
+            std::cout << "La région de votre Wii est trouvable dans les Options Wii -> Paramètres Wii.\nIl s'agit de la lettre à côté du numéro de version en haut à gauche." << std::endl << std::endl;
             for ( int i = 0; i < wii_region.size(); i++ ) {
                 std::cout << i << " : " + wii_region[i] << std::endl;
             }
@@ -240,6 +247,7 @@ namespace CLI {
             std::cout << std::endl;
             std::cout << "Votre choix : ";
             std::cin >> c;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
             if ( c == 'q' || c == 'Q' )
                 return;

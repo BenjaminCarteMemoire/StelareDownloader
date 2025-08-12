@@ -206,11 +206,25 @@ header img {
     text-decoration: underline;
 }
 
-.explanation_content {
+.explanation {
 
-    display: none;
+    display: block;
     padding: 2% 5% 2% 5%;
-    font-size: 14px;
-    margin-top: 3%;
+    margin-top: 1%;
+    line-height: 1.5;
+
+}
+
+.explanation p img {
+
+    margin-top: 0.5%;
+    width: 100%;
+    text-align: center;
+
+}
+
+.explanation p img:hover {
+
+    cursor: pointer;
 
 }
