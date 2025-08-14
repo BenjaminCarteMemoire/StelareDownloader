@@ -7,6 +7,7 @@ set INCLUDE_DIR=include
 set WEBUI_DIR=lib\webui
 set LIBZIP_DIR=lib\libzip
 set ZLIB_DIR=lib\zlib
+set HTTPLIB_DIR=lib\httplib
 
 set OUT_EXE=bin/StelareDownloader.exe
 set OUT_OBJ=build\\
@@ -17,7 +18,8 @@ set INCLUDES=^
  /I%INCLUDE_DIR% ^
  /I%WEBUI_DIR%\include ^
  /I%ZLIB_DIR%\include ^
- /I%LIBZIP_DIR%\include
+ /I%LIBZIP_DIR%\include ^
+ /I%HTTPLIB_DIR%\include
 
 set SOURCES=^
  %SRC_DIR%\main.cpp ^

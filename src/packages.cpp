@@ -68,11 +68,15 @@ void prepare_packages() {
     #endif
 
     Uninstall_CFW.downloads = {
-        { "Luma3DSv13.3.3.zip", "https://github.com/LumaTeam/Luma3DS/releases/download/v13.3.3/Luma3DSv13.3.3.zip" },
+        // { "Luma3DSv13.3.2.zip", "https://github.com/LumaTeam/Luma3DS/releases/download/v13.3.2/Luma3DSv13.3.2.zip" },
         { "GodMode9-v2.1.1-20220322194259.zip", "https://github.com/d0k3/GodMode9/releases/download/v2.1.1/GodMode9-v2.1.1-20220322194259.zip" },
         { "DSiWareUninstaller.3dsx", "https://github.com/MechanicalDragon0687/DSiWare-Uninstaller/releases/download/1.0.1/DSiWareUninstaller.3dsx" },
         { "safety_test.gm9", "https://stelare.org/assets/stelare/tutorials/uninstall_cfw/safety_test.gm9" },
         { "uninstall_cfw.gm9", "https://stelare.org/assets/stelare/tutorials/uninstall_cfw/uninstall_cfw.gm9" }
+    };
+
+    Uninstall_CFW.dynamic_downloads = {
+        { "Luma3DSv13.3.2.zip", { "https://github.com/LumaTeam/Luma3DS/releases/download/v13.3.2/Luma3DSv13.3.2.zip", "zip" } }
     };
 
     Uninstall_CFW.extract_all = {
@@ -149,8 +153,12 @@ void prepare_packages() {
     #endif
 
     MSET9.downloads = {
-        { "MSET9-v2.1.zip", "https://github.com/hacks-guide/MSET9/releases/download/v2.1/MSET9-v2.1.zip" },
+        // { "MSET9-v2.1.zip", "https://github.com/hacks-guide/MSET9/releases/download/v2.1/MSET9-v2.1.zip" },
         { "python-3.13.5-amd64.exe", "https://www.python.org/ftp/python/3.13.5/python-3.13.5-amd64.exe" }
+    };
+
+    MSET9.dynamic_downloads = {
+        { "MSET9-v2.1.zip", { "https://github.com/hacks-guide/MSET9/releases/download/v2.1/MSET9-v2.1.zip", "zip" } }
     };
 
     MSET9.extract_all = {

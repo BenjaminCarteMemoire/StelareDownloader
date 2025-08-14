@@ -8,3 +8,4 @@ build_msvc_cli.bat
 temp
 backup
 executables
+CMakeLists.txt

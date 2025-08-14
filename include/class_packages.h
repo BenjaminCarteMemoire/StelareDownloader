@@ -24,6 +24,16 @@ enum Package_Category {
 
 class Package {
 
+    private:
+
+        /**
+         * If you need to replace a filename by another for updates.
+         *
+         * key : Previous filename
+         * value : New filename
+         */
+        std::map<std::string, std::string> _filename_replacer = {};
+
     public:
 
         /**
@@ -65,6 +75,17 @@ class Package {
         std::vector<std::function<void( std::map<std::string, std::string> add )>> callbacks = {};
 
         #endif
+
+
+        /**
+         * All files needed to be downloaded from dynamic parsing.
+         * Useful for updates.
+         *
+         * key : Filename
+         * value : - URL
+         *         - Possibly file key to be checked.
+         */
+        std::map<std::string, std::pair<std::string, std::string>> dynamic_downloads = {};
 
         /**
          * All files needed to be downloaded.
@@ -134,6 +155,9 @@ class Package {
 
         void add_in_package_global();
         void automatic_process();
+
+        void filename_replacer_add( std::string old_filename, std::string new_filename );
+        std::string filename_replacer( std::string filename );
 
 };
 
