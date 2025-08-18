@@ -9,7 +9,7 @@ Packages available : MSET9 (From official Github), Uninstall CFW scripts (3DS), 
 
 This executable have two variants :
  - **WEBUI Interface window** : Modern WebUI interface using the "best browser". (Mostly edge). Works on Windows 10 and 11.
- - **CLI (Command-Line Interface)** : UI in the terminal. Works on Windows 7 and after.
+ - **CLI (Command-Line Interface)** : UI in the terminal. Works on Windows 8.1 and after.
 
 ## Supports
 
