@@ -3,7 +3,7 @@
 ## Description
 
 A Downloader helper in French for some console hacking tools and emulator tools. From Stelare website.
-Packages available : MSET9 (From official Github), Uninstall CFW scripts (3DS), Wilbrand (Easy use), GUIFormat.
+Packages available : MSET9 (From official Github), Uninstall CFW scripts (3DS), Wilbrand (Easy use), Finalizing CFW install (3DS), GUIFormat.
 
 **If you have some DLLs problems, please install these redistribuables : https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170**
 
