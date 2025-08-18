@@ -4,7 +4,6 @@
 #include <vector>
 #include <map>
 #include <unordered_map>
-
 #include "class_packages.h"
 
 // Control values.
@@ -17,10 +16,10 @@ constexpr bool IS_WINDOWS = false;
 
 #if defined(STELARE_CLI)
 constexpr bool IS_CLI = true;
-constexpr bool IS_WEBUI = false;
+constexpr bool IS_GUI = false;
 #else
 constexpr bool IS_CLI = false;
-constexpr bool IS_WEBUI = true;
+constexpr bool IS_GUI = true;
 #endif
 
 // Path values.
@@ -28,6 +27,7 @@ constexpr bool IS_WEBUI = true;
 const extern std::string STELARE_TEMP_FOLDER;
 const extern std::string STELARE_BACKUP_FOLDER;
 const extern std::string STELARE_EXE_FOLDER;
+const extern std::string STELARE_CONFIG_FILE;
 
 // Time values.
 
@@ -56,3 +56,15 @@ extern std::string version_region;
 extern std::string mac_address;
 
 extern std::vector<std::string> SUMMARY;
+
+// Update values.
+extern bool need_to_update;
+extern std::string new_version_filename;
+extern std::string new_version_url;
+
+// Config values
+#include "../lib/mini/ini.h"
+extern mINI::INIFile config_file;
+extern mINI::INIStructure config;
+
+extern std::string locale;

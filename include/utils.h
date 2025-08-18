@@ -2,6 +2,7 @@
 
 #include <regex>
 
+void init_default_config();
 void log_info( std::string message );
 bool verify_mac_address( std::string mac_address );
 std::string yesterday_date();

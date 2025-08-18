@@ -16,8 +16,9 @@
 
 enum Package_Category {
 
-    Pack = 0,
-    Exe = 1,
+    Essentials = 0,
+    Pack = 100,
+    Exe = 200,
     Tools = 999
 
 };

@@ -2,6 +2,7 @@
 #include "../include/globals.h"
 #include "../include/storage.h"
 #include "../include/utils.h"
+#include "../include/i18n.h"
 
 #ifndef STELARE_CLI
 
@@ -35,21 +36,27 @@ void Package::automatic_process() {
         Sleep( STELARE_TIME_WAIT );
     #endif
 
+    Storage::Codes current_code_result;
+
     // Downloads...
     if ( !this->downloads.empty() ) {
         for ( auto download : this->downloads ) {
-            change_status( "Téléchargement de : " + download.first );
-            Storage::download_in_temp_folder( download.second, download.first );
+            change_status( _( "package_download_log" ) + download.first );
+            current_code_result = Storage::download_in_temp_folder( download.second, download.first );
+            if ( Storage::handle_error( "Download", current_code_result, change_status_error, download.first ) )
+                return;
         }
     }
 
     // Dynamic downloads...
     if ( !this->dynamic_downloads.empty() ) {
         for ( auto &download: this->dynamic_downloads ) {
-            change_status( "Tentative de récupération d'une nouvelle version de : " + download.first );
+            change_status( _( "package_dynamic_download_get_new_version" ) + download.first );
             std::string filename = dynamic_download_handle( download.first, &download.second, this );
-            change_status( "Téléchargement de : " + filename );
-            Storage::download_in_temp_folder( download.second.first, filename );
+            change_status( _( "package_download_log" ) + filename );
+            current_code_result = Storage::download_in_temp_folder( download.second.first, filename );
+            if ( Storage::handle_error( "Download", current_code_result, change_status_error, filename ) )
+                return;
         }
     }
 
@@ -59,7 +66,7 @@ void Package::automatic_process() {
     if ( !this->extract_all.empty() ) {
         for ( auto extract_all : this->extract_all ) {
             real_filename = this->filename_replacer( extract_all.first );
-            change_status( "Extraction de : " + real_filename + " dans " + extract_all.second );
+            change_status( _( "package_download_extract_1" ) + real_filename + _( "package_in" ) + extract_all.second );
             Storage::extract_all_in_temp_folder( real_filename, extract_all.second );
         }
     }
@@ -68,7 +75,7 @@ void Package::automatic_process() {
     if ( !this->extract_file.empty() ) {
         for ( auto extract_file : this->extract_file ) {
             real_filename = this->filename_replacer( extract_file.first );
-            change_status( "Extraction de : " + real_filename + "(" + extract_file.second.first + ") dans " + extract_file.second.second );
+            change_status( _( "package_download_extract_1" ) + real_filename + "(" + extract_file.second.first + ")" + _( "package_in" ) + extract_file.second.second );
             Storage::extract_file_in_temp_folder( real_filename, extract_file.second.first, extract_file.second.second );
         }
     }
@@ -77,7 +84,7 @@ void Package::automatic_process() {
     if ( !this->extract_folder.empty() ) {
         for ( auto extract_folder : this->extract_folder ) {
             real_filename = this->filename_replacer( extract_folder.first );
-            change_status( "Extraction de : " + real_filename + "(" + extract_folder.second.first + ") dans " + extract_folder.second.second );
+            change_status( _( "package_download_extract_1" ) + real_filename + "(" + extract_folder.second.first + ")" + _( "package_in" ) + extract_folder.second.second );
             Storage::extract_folder_in_temp_folder( real_filename, extract_folder.second.first, extract_folder.second.second );
         }
     }
@@ -86,7 +93,7 @@ void Package::automatic_process() {
     if ( !this->move_to_executables.empty() ) {
         for ( std::string move_to_executable : this->move_to_executables ) {
             real_filename = this->filename_replacer( move_to_executable );
-            change_status( "Déplacement de l'exécutable : " + real_filename );
+            change_status( _( "package_move_exe" ) + real_filename );
             Storage::move_to_executables( real_filename );
         }
     }
@@ -96,7 +103,7 @@ void Package::automatic_process() {
         if ( !this->move_to_drive_files.empty() ) {
             for ( auto move_to_drive_file : this->move_to_drive_files ) {
                 real_filename = this->filename_replacer(move_to_drive_file.first );
-                change_status( "Copie du fichier : " + real_filename + " dans " + selected_drive_letter + move_to_drive_file.second );
+                change_status( _( "package_file_copy" ) + real_filename + _( "package_in" ) + selected_drive_letter + move_to_drive_file.second );
                 Storage::do_a_backup_and_copy_file_to_drive( selected_drive_letter, move_to_drive_file.second, real_filename );
             }
         }
@@ -104,7 +111,7 @@ void Package::automatic_process() {
         if ( !this->move_to_drive_folders.empty() ) {
             for ( auto move_to_drive_folder : this->move_to_drive_folders ) {
                 real_filename = this->filename_replacer(move_to_drive_folder.first );
-                change_status( "Copie du fichier : " + real_filename + " dans " + selected_drive_letter + move_to_drive_folder.second );
+                change_status( _( "package_file_copy" ) + real_filename + _( "package_in" ) + selected_drive_letter + move_to_drive_folder.second );
                 Storage::do_a_backup_and_copy_folder_to_drive( selected_drive_letter, move_to_drive_folder.second, real_filename );
             }
         }

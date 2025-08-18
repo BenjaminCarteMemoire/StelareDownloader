@@ -6,6 +6,7 @@
 #include <vector>
 #include <limits>
 
+#include "../include/json.hpp"
 #include "../include/utils.h"
 
 #ifdef _WIN32
@@ -63,8 +64,10 @@ namespace CLI {
 
             for ( auto package: PACKAGES ) {
                 if ( select == package.identifier || select == CLI_Tools::upper_to_lower( package.identifier ) ) {
-                    if ( package.callbacks.size() >= 1 )
-                        package.callbacks[0]({});
+                    if ( package.category != Package_Category::Essentials ) {
+                        if ( package.callbacks.size() >= 1 )
+                            package.callbacks[0]({});
+                    }
                 }
             }
 
@@ -271,6 +274,15 @@ void change_status( std::string new_status ) {
 
     std::cout << new_status << std::endl;
     SUMMARY.push_back( new_status );
+
+}
+
+void change_status_error( std::string error_message ) {
+
+    change_status( error_message );
+    if ( IS_WINDOWS )
+        system("pause");
+    return;
 
 }
 

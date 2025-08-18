@@ -4,8 +4,18 @@
 #include <ctime>
 #include "../include/json.hpp"
 #include "../lib/httplib/include/httplib.h"
+#include "../lib/mini/ini.h"
 
 using json = nlohmann::json;
+
+void init_default_config() {
+
+    config["i18n"]["lang"] = "en";
+
+    config_file.generate( config );
+
+}
+
 
 /**
  * Log some info in the console.

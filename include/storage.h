@@ -2,17 +2,19 @@
 #define _STORAGE_H_
 
 #include <iostream>
+#include <functional>
 #include <vector>
 
 namespace Storage {
 
     enum Codes {
         OK = 0,
+        Download_Failed = 30,
         Cant_Open = 59,
         WTF = 69
     };
 
-    bool verify_mac_address( std::string mac_address );
+    void read_config_file();
 
     std::vector<std::string> return_available_removable_drives();
 
@@ -20,9 +22,9 @@ namespace Storage {
 
     void temp_folder_exists();
 
-    int download_in_temp_folder( std::string url, std::string filename );
+    Codes download_in_temp_folder( std::string url, std::string filename );
 
-    int extract_all_in_temp_folder( std::string zip_path_temp, std::string output_folder_in_temp );
+    Codes extract_all_in_temp_folder( std::string zip_path_temp, std::string output_folder_in_temp );
 
     int extract_file_in_temp_folder( std::string zip_path_temp, std::string file_name_in_zip, std::string output_folder_in_temp_w_filename );
 
@@ -37,6 +39,8 @@ namespace Storage {
     int move_to_executables( std::string temp_file );
 
     int clear_folder( std::string folder_name );
+
+    bool handle_error( std::string previous_case, Codes code, std::function<void(std::string error_message)> callback_error_display, std::string info );
 
 }
 

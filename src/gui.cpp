@@ -1,4 +1,5 @@
 #include "../include/gui.h"
+#include "../include/i18n.h"
 
 #include <chrono>
 
@@ -94,6 +95,21 @@ void change_status( std::string new_status )  {
 
 }
 
+void change_status_error( std::string error_message ) {
+
+    if ( WEBUI_WINDOWS.find( "Processing" ) != WEBUI_WINDOWS.end() ) {
+        WEBUI_WINDOWS["Processing"].run( "document.getElementById('loader_bar').style.display='none'" );
+        WEBUI_WINDOWS["Processing"].run( "document.getElementById('success_mark').style.display='block'" );
+        WEBUI_WINDOWS["Processing"].run( "document.getElementById('warning_text').innerHTML=''" );
+        WEBUI_WINDOWS["Processing"].run("document.getElementById('title_text').innerHTML='" + _( "package_generic_error" ) + "'");
+        change_status( error_message );
+    } else
+        std::cout << "Can't change status. Processing not loaded." << std::endl;
+
+    SUMMARY.clear();
+
+}
+
 void job_done() {
 
     if ( WEBUI_WINDOWS.find( "Processing" ) != WEBUI_WINDOWS.end() ) {
@@ -101,9 +117,10 @@ void job_done() {
         WEBUI_WINDOWS["Processing"].run( "document.getElementById('success_mark').style.display='block'" );
         WEBUI_WINDOWS["Processing"].run( "document.getElementById('warning_text').innerHTML=''" );
         WEBUI_WINDOWS["Processing"].run("document.getElementById('title_text').innerHTML='Processus terminé !'");
-        change_status( "Le transfert a été effectué sur le lecteur. Vous pouvez fermer la fenêtre et quitter le gestionnaire." );
+        change_status( _( "package_finished" ) );
     } else
         std::cout << "Can't change status. Processing not loaded." << std::endl;
 
     SUMMARY.clear();
+
 }

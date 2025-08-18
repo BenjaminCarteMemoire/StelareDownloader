@@ -3,6 +3,7 @@
 #include "../include/globals.h"
 #include "../include/storage.h"
 #include "../include/utils.h"
+#include "../include/i18n.h"
 
 #ifndef STELARE_CLI
 #include "../lib/webui/include/webui.hpp"
@@ -16,6 +17,72 @@
 #endif
 
 void prepare_packages() {
+
+    // ==================== STELARE DOWNLOADER UPDATE CHECK ====================
+
+    static Package Stelare_Downloader( "stelare_downloader", "Vérifier les mises à jour de Stelare Downloader", '#', Package_Category::Essentials);
+
+    #ifndef STELARE_CLI
+
+    Stelare_Downloader.callbacks.push_back([](webui::window::event *e) {
+
+        log_info( "[Update] Check if updates are available" );
+
+        if ( Stelare_Downloader.dynamic_downloads.empty() || Stelare_Downloader.dynamic_downloads.size() != 1 )
+            return;
+
+        for ( auto update : Stelare_Downloader.dynamic_downloads ) {
+
+            std::string current_version_filename = update.first;
+            std::string new_filename = dynamic_download_handle( current_version_filename, &update.second, &Stelare_Downloader );
+
+            if ( new_filename == current_version_filename ) // Same version, don't update.
+                break;
+
+            log_info( "[Update] There is a new update available." );
+
+            need_to_update = true;
+            new_version_filename = new_filename;
+            new_version_url = update.second.first;
+
+        }
+
+    });
+
+    #else
+
+    Stelare_Downloader.callbacks.push_back([](std::map<std::string, std::string> add = {}) {
+
+        log_info( "[Update] Check if updates are available" );
+
+        if ( Stelare_Downloader.dynamic_downloads.empty() || Stelare_Downloader.dynamic_downloads.size() != 1 )
+            return;
+
+        for ( auto update : Stelare_Downloader.dynamic_downloads ) {
+
+            std::string current_version_filename = update.first;
+            std::string new_filename = dynamic_download_handle( current_version_filename, &update.second, &Stelare_Downloader );
+
+            if ( new_filename == current_version_filename ) // Same version, don't update.
+                break;
+
+            log_info( "[Update] There is a new update available." );
+
+            need_to_update = true;
+            new_version_filename = new_filename;
+            new_version_url = update.second.first;
+
+        }
+
+    });
+
+    #endif
+
+    Stelare_Downloader.dynamic_downloads = {
+        {"Stelare_Downloader_v0.1.0_x64.zip ", {"https://github.com/BenjaminCarteMemoire/StelareDownloader/releases/download/v0.1.0/Stelare_Downloader_v0.1.0_x64.zip", "zip" } }
+    };
+
+    Stelare_Downloader.add_in_package_global();
 
     // ==================== UNINSTALL CFW 3DS ====================
 
@@ -69,14 +136,16 @@ void prepare_packages() {
 
     Uninstall_CFW.downloads = {
         // { "Luma3DSv13.3.2.zip", "https://github.com/LumaTeam/Luma3DS/releases/download/v13.3.2/Luma3DSv13.3.2.zip" },
-        { "GodMode9-v2.1.1-20220322194259.zip", "https://github.com/d0k3/GodMode9/releases/download/v2.1.1/GodMode9-v2.1.1-20220322194259.zip" },
-        { "DSiWareUninstaller.3dsx", "https://github.com/MechanicalDragon0687/DSiWare-Uninstaller/releases/download/1.0.1/DSiWareUninstaller.3dsx" },
+        // { "GodMode9-v2.1.1-20220322194259.zip", "https://github.com/d0k3/GodMode9/releases/download/v2.1.1/GodMode9-v2.1.1-20220322194259.zip" },
+        // { "DSiWareUninstaller.3dsx", "https://github.com/MechanicalDragon0687/DSiWare-Uninstaller/releases/download/1.0.1/DSiWareUninstaller.3dsx" },
         { "safety_test.gm9", "https://stelare.org/assets/stelare/tutorials/uninstall_cfw/safety_test.gm9" },
         { "uninstall_cfw.gm9", "https://stelare.org/assets/stelare/tutorials/uninstall_cfw/uninstall_cfw.gm9" }
     };
 
     Uninstall_CFW.dynamic_downloads = {
-        { "Luma3DSv13.3.2.zip", { "https://github.com/LumaTeam/Luma3DS/releases/download/v13.3.2/Luma3DSv13.3.2.zip", "zip" } }
+        { "Luma3DSv13.3.3.zip", { "https://github.com/LumaTeam/Luma3DS/releases/download/v13.3.3/Luma3DSv13.3.3.zip", "zip" } },
+        { "GodMode9-v2.1.1-20220322194259.zip", { "https://github.com/d0k3/GodMode9/releases/download/v2.1.1/GodMode9-v2.1.1-20220322194259.zip", "zip" } },
+        { "DSiWareUninstaller.3dsx", { "https://github.com/MechanicalDragon0687/DSiWare-Uninstaller/releases/download/1.0.1/DSiWareUninstaller.3dsx", "3dsx" } }
     };
 
     Uninstall_CFW.extract_all = {
@@ -174,6 +243,104 @@ void prepare_packages() {
     };
 
     MSET9.add_in_package_global();
+
+    // ==================== 3DS TRUE FINALIZE KIT ====================
+
+    // ==================== 3DS FINALIZE KIT ====================
+
+    static Package Finalize_Kit( "finalize_kit", "3DS / Kit applications du hack", 'K', Package_Category::Pack );
+
+    #ifndef STELARE_CLI
+
+    // Step 1.
+    Finalize_Kit.callbacks.push_back([](webui::window::event*e) {
+
+        log_info( "[Pack] Begin Finalize Kit" );
+        if ( Finalize_Kit.callbacks.size() >= 2 )
+            select_drive_letter_window( [](webui::window::event *e) { Finalize_Kit.callbacks[1](e); } );
+        else
+            log_info( "Problem with Finalize Kit Package callbacks." );
+
+    });
+
+    // Step 2.
+    Finalize_Kit.callbacks.push_back([](webui::window::event*e) {
+
+        selected_drive_letter = e->get_string();
+        GUI_Tools::close_a_window( "Drive_Letter" );
+        Finalize_Kit.automatic_process();
+        job_done();
+        webui::wait();
+
+    });
+
+    #else
+
+    // Step 1
+    Finalize_Kit.callbacks.push_back( []( std::map<std::string, std::string> add = {}) {
+        log_info( "[Pack] Begin Finalize Kit" );
+        if ( Finalize_Kit.callbacks.size() >= 2 )
+            CLI::drive_letter_prompt( Finalize_Kit.callbacks[1] );
+        else
+            log_info( "Problem with Finalize Kit Package callbacks." );
+
+    });
+
+    // Step 2
+    Finalize_Kit.callbacks.push_back([](std::map<std::string, std::string> add = {}) {
+
+        Finalize_Kit.automatic_process();
+        job_done();
+
+    });
+
+    #endif
+
+    Finalize_Kit.dynamic_downloads = {
+        { "Luma3DSv13.3.3.zip", { "https://github.com/LumaTeam/Luma3DS/releases/download/v13.3.3/Luma3DSv13.3.3.zip", "zip" } },
+        { "GodMode9-v2.1.1-20220322194259.zip", { "https://github.com/d0k3/GodMode9/releases/download/v2.1.1/GodMode9-v2.1.1-20220322194259.zip", "zip" } },
+        { "Homebrew_Launcher.cia", { "https://github.com/PabloMK7/homebrew_launcher_dummy/releases/download/v1.0/Homebrew_Launcher.cia", "cia" } },
+        { "FBI.3dsx", {"https://github.com/Steveice10/FBI/releases/download/2.6.1/FBI.3dsx", "3dsx" } },
+        { "FBI.cia", {"https://github.com/Steveice10/FBI/releases/download/2.6.1/FBI.cia", "cia" } },
+        { "faketik.3dsx", {"https://github.com/ihaveamac/faketik/releases/download/v1.1.2/faketik.3dsx", "3dsx" } },
+        { "Universal-Updater.cia", {"https://github.com/Universal-Team/Universal-Updater/releases/download/v3.2.8/Universal-Updater.cia", "cia"} },
+        { "Anemone3DS.cia", {"https://github.com/astronautlevel2/Anemone3DS/releases/download/v3.0.1/Anemone3DS.cia", "cia"} },
+        { "Checkpoint.cia", { "https://github.com/BernardoGiordano/Checkpoint/releases/download/v3.10.1/Checkpoint.cia", "cia" } },
+        { "ftpd.cia", { "https://github.com/mtheall/ftpd/releases/download/v3.2.1/ftpd.cia", "ftpd.cia" } },
+        { "y_title_fixer.firm", {"https://github.com/chalenged/gm9-title-fixer/releases/download/v1.1.4/y_title_fixer.firm", "firm" } }
+    };
+
+    Finalize_Kit.extract_all = {
+        {"Luma3DSv13.3.3.zip", "luma3ds"}
+    };
+
+    Finalize_Kit.extract_file = {
+        {"GodMode9-v2.1.1-20220322194259.zip", {"GodMode9.firm", "GodMode9.firm"} }
+    };
+
+    Finalize_Kit.extract_folder = {
+        { "GodMode9-v2.1.1-20220322194259.zip", { "gm9", "godmode9/gm9" } }
+    };
+
+    Finalize_Kit.move_to_drive_files = {
+        {"GodMode9.firm", "luma/payloads/"},
+        {"FBI.3dsx", "3ds/"},
+        {"faketik.3dsx", "3ds/"},
+        {"Homebrew_Launcher.cia", "cias/"},
+        {"FBI.cia", "cias/"},
+        {"Universal-Updater.cia", "cias/"},
+        {"Anemone3DS.cia", "cias/"},
+        {"Checkpoint.cia", "cias/"},
+        {"ftpd.cia", "cias/"},
+        {"y_title_fixer.firm", "luma/payloads/"}
+    };
+
+    Finalize_Kit.move_to_drive_folders = {
+        {"luma3ds", ""},
+        {"godmode9", ""}
+    };
+
+    Finalize_Kit.add_in_package_global();
 
     // ==================== WILBRAND WII ====================
 
@@ -386,7 +553,7 @@ void prepare_packages() {
         processing_window();
         Sleep( STELARE_TIME_WAIT );
         for ( auto folder: folders_clear ) {
-            change_status( "Suppression des fichiers de : " + folder );
+            change_status( _( "package_folder_erase" ) + folder );
             Storage::clear_folder( folder );
         }
         job_done();

@@ -10,6 +10,8 @@
 #include <string>
 #include <regex>
 
+#include "../lib/mini/ini.h"
+
 #ifdef _WIN32
 #include <winsock2.h>
 #include <windows.h>
@@ -18,6 +20,15 @@
 namespace fs = std::filesystem;
 
 namespace Storage {
+
+    void read_config_file() {
+
+        if (!fs::exists( STELARE_CONFIG_FILE ) )
+            init_default_config();
+
+        config_file.read( config );
+
+    }
 
     /**
      * Return removable drives available on the computer.
@@ -96,7 +107,7 @@ namespace Storage {
      * @param filename - Filename in the temp folder.
      * @return
      */
-    int download_in_temp_folder( std::string url, std::string filename ) {
+    Codes download_in_temp_folder( std::string url, std::string filename ) {
 
         temp_folder_exists();
 
@@ -104,12 +115,16 @@ namespace Storage {
 
         #ifdef _WIN32
             log_info("[Download] Try Windows download from: " + url + " ;to: " + save_path );
-            if ( URLDownloadToFile(NULL, url.c_str(), save_path.c_str(), 0, NULL) == S_OK )
-                return Codes::OK; // Download good.
-            return Codes::Cant_Open; // Download failed.
+            try {
+                if ( URLDownloadToFile(NULL, url.c_str(), save_path.c_str(), 0, NULL) == S_OK )
+                    return Codes::OK; // Download good.
+                return Codes::Cant_Open; // Download failed.
+            } catch ( ... ) {
+                return Codes::Download_Failed;
+            }
         #endif
 
-        return Codes::OK; // What is your system ?
+        return Codes::WTF; // What is your system ?
 
     }
 
@@ -120,7 +135,7 @@ namespace Storage {
      * @param output_folder_in_temp - Output folder in temp folder. Leave empty to extract in the temp root.
      * @return
      */
-    int extract_all_in_temp_folder( std::string zip_path_temp, std::string output_folder_in_temp ) {
+    Codes extract_all_in_temp_folder( std::string zip_path_temp, std::string output_folder_in_temp ) {
 
         temp_folder_exists();
 
@@ -131,7 +146,7 @@ namespace Storage {
 
         zip* archive = zip_open( input.c_str(), ZIP_RDONLY, &errors );
         if ( !archive )
-            return errors;
+            return Codes::Cant_Open;
 
         zip_int64_t total_size = zip_get_num_entries(archive, 0);
         std::string output = fs::current_path().string() + "\\" + STELARE_TEMP_FOLDER + "\\" + output_folder_in_temp;
@@ -379,6 +394,31 @@ namespace Storage {
             return 0;
         }
         return 1;
+    }
+    bool handle_error( std::string previous_case, Codes code, std::function<void(std::string error_message)> callback_error_display, std::string info ) {
+
+        if ( code == Codes::OK )
+            return false;
+
+        switch ( code ) {
+            case Codes::Cant_Open:
+                if ( previous_case == "Download" ) {
+                    callback_error_display( "Le fichier suivant n'a pas pu être téléchargé : " + info );
+                    return true;
+                }
+                break;
+            case Codes::Download_Failed:
+                if ( previous_case == "Download" ) {
+                    callback_error_display( "Une erreur est survenue durant le téléchargement : " + info );
+                    return true;
+                }
+                break;
+            default:
+                break;
+        }
+
+        return false;
+
     }
 
 }

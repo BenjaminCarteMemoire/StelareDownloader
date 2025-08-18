@@ -9,3 +9,4 @@ temp
 backup
 executables
 CMakeLists.txt
+config.ini

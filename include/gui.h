@@ -20,6 +20,8 @@ void processing_window();
 
 void change_status( std::string new_status );
 
+void change_status_error( std::string error_message );
+
 void job_done();
 
 #endif
