@@ -49,6 +49,36 @@ void prepare_packages() {
 
     });
 
+    Stelare_Downloader.callbacks.push_back([](webui::window::event *e) {
+
+        log_info( "Begin Update Stelare_Downloader" );
+        MAIN.close();
+
+        Stelare_Downloader.downloads = {
+            { new_version_filename, new_version_url }
+        };
+
+        Stelare_Downloader.dynamic_downloads = {};
+
+        Stelare_Downloader.extract_all = {
+            { new_version_filename, "stelare" }
+        };
+
+        Stelare_Downloader.automatic_process();
+        Storage::copy_folder_to_previous( "stelare" );
+        GUI_Tools::close_a_window( "Processing" );
+        if ( IS_WINDOWS ) {
+            ShellExecuteA(NULL, "open", "updater.exe", "\"temp/stelare/StelareDownloader.exe\" \"StelareDownloader.exe\"", NULL, SW_HIDE);
+            ExitProcess(0);
+        }
+        system( "pause" );
+        // GUI_Tools::close_a_window( "Processing" );
+
+        Storage::clear_folder( STELARE_TEMP_FOLDER );
+        std::cout << "Votre programme a été mis à jour. Vous pouvez le fermer et le réouvrir." << std::endl;
+
+    });
+
     #else
 
     Stelare_Downloader.callbacks.push_back([](std::map<std::string, std::string> add = {}) {
@@ -76,10 +106,38 @@ void prepare_packages() {
 
     });
 
+    Stelare_Downloader.callbacks.push_back([](std::map<std::string, std::string> add = {}) {
+
+        log_info( "Begin Update Stelare_Downloader" );
+
+        Stelare_Downloader.downloads = {
+           { new_version_filename, new_version_url }
+       };
+
+       Stelare_Downloader.dynamic_downloads = {};
+
+       Stelare_Downloader.extract_all = {
+           { new_version_filename, "stelare" }
+       };
+
+       Stelare_Downloader.automatic_process();
+       Storage::copy_folder_to_previous( "stelare" );
+       if ( IS_WINDOWS ) {
+           ShellExecuteA(NULL, "open", "updater.exe", "\"temp/stelare/StelareDownloaderCli.exe\" \"StelareDownloaderCli.exe\"", NULL, SW_HIDE);
+           ExitProcess(0);
+       }
+       system( "pause" );
+       // GUI_Tools::close_a_window( "Processing" );
+
+       Storage::clear_folder( STELARE_TEMP_FOLDER );
+       std::cout << "Votre programme a été mis à jour. Vous pouvez le fermer et le réouvrir." << std::endl;
+
+    });
+
     #endif
 
     Stelare_Downloader.dynamic_downloads = {
-        {"Stelare_Downloader_v0.1.0_x64.zip ", {"https://github.com/BenjaminCarteMemoire/StelareDownloader/releases/download/v0.1.0/Stelare_Downloader_v0.1.0_x64.zip", "zip" } }
+        {"Stelare_Downloader_v" + STELARE_VERSION + "_x64.zip ", {"https://github.com/BenjaminCarteMemoire/StelareDownloader/releases/download/v0.1.0/Stelare_Downloader_v0.1.0_x64.zip", "zip" } }
     };
 
     Stelare_Downloader.add_in_package_global();
@@ -245,6 +303,66 @@ void prepare_packages() {
     MSET9.add_in_package_global();
 
     // ==================== 3DS TRUE FINALIZE KIT ====================
+
+    static Package True_Finalize_Kit( "true_finalize_kit", "3DS / Finalisation du hack", 'F', Package_Category::Pack );
+
+    #ifndef STELARE_CLI
+
+    // Step 1.
+    True_Finalize_Kit.callbacks.push_back([](webui::window::event*e) {
+
+        log_info( "[Pack] Begin True Finalize Kit" );
+        if ( True_Finalize_Kit.callbacks.size() >= 2 )
+            select_drive_letter_window( [](webui::window::event *e) { True_Finalize_Kit.callbacks[1](e); } );
+        else
+            log_info( "Problem with True Finalize Kit Package callbacks." );
+
+    });
+
+    // Step 2.
+    True_Finalize_Kit.callbacks.push_back([](webui::window::event*e) {
+
+        selected_drive_letter = e->get_string();
+        GUI_Tools::close_a_window( "Drive_Letter" );
+        True_Finalize_Kit.automatic_process();
+        job_done();
+        webui::wait();
+
+    });
+
+    #else
+
+    // Step 1
+    True_Finalize_Kit.callbacks.push_back( []( std::map<std::string, std::string> add = {}) {
+        log_info( "[Pack] Begin True Finalize Kit" );
+        if ( True_Finalize_Kit.callbacks.size() >= 2 )
+            CLI::drive_letter_prompt( True_Finalize_Kit.callbacks[1] );
+        else
+            log_info( "Problem with True Finalize Kit Package callbacks." );
+
+    });
+
+    // Step 2
+    True_Finalize_Kit.callbacks.push_back([](std::map<std::string, std::string> add = {}) {
+
+        True_Finalize_Kit.automatic_process();
+        job_done();
+
+    });
+
+    #endif
+
+    True_Finalize_Kit.dynamic_downloads = {
+        { "x_finalize_helper.firm", { "https://github.com/hacks-guide/finalize/releases/download/v1.10.2-hotfix2/x_finalize_helper.firm", "firm" } },
+        { "finalize.romfs", { "https://github.com/hacks-guide/finalize/releases/download/v1.10.2-hotfix2/finalize.romfs", "romfs" } }
+    };
+
+    True_Finalize_Kit.move_to_drive_files = {
+        { "finalize.romfs", "" },
+        {"x_finalize_helper.firm", "luma/payloads/"}
+    };
+
+    True_Finalize_Kit.add_in_package_global();
 
     // ==================== 3DS FINALIZE KIT ====================
 

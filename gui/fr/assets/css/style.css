@@ -78,9 +78,9 @@ header img {
     flex-direction: column;
     flex-basis: 100%;
     flex: 1;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
-    margin: 3.5% 0% 3.5% 0%;
+    margin: 3.5% 1% 3.5% 1%;
 
 }
 

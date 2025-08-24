@@ -40,6 +40,8 @@ namespace Storage {
 
     int clear_folder( std::string folder_name );
 
+    int copy_folder_to_previous(const std::string& temp_folder_name);
+
     bool handle_error( std::string previous_case, Codes code, std::function<void(std::string error_message)> callback_error_display, std::string info );
 
 }

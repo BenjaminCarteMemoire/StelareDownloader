@@ -395,6 +395,31 @@ namespace Storage {
         }
         return 1;
     }
+
+    int copy_folder_to_previous(const std::string& temp_folder_name) {
+        // Chemin complet du dossier temporaire
+        fs::path temp_folder_path = fs::current_path() / STELARE_TEMP_FOLDER / temp_folder_name;
+        std::vector<std::string> files_in_temp_folder = get_file_list_recursively(temp_folder_path.string());
+
+        for (const std::string& relative_file : files_in_temp_folder) {
+            fs::path source_file = temp_folder_path / relative_file;
+            fs::path destination_file = fs::current_path() / relative_file;
+
+            try {
+                // Crée les dossiers nécessaires à la destination
+                fs::create_directories(destination_file.parent_path());
+
+                // Copie le fichier avec l’option overwrite_existing
+                fs::copy_file(source_file, destination_file, fs::copy_options::overwrite_existing);
+
+                log_info("[Copy] " + source_file.string() + " to " + destination_file.string());
+            } catch (const std::exception& e) {
+                std::cerr << "Erreur lors de la copie de " << source_file << " : " << e.what() << std::endl;
+            }
+        }
+
+        return 0;
+    }
     bool handle_error( std::string previous_case, Codes code, std::function<void(std::string error_message)> callback_error_display, std::string info ) {
 
         if ( code == Codes::OK )

@@ -41,11 +41,20 @@ namespace GUI_Tools {
 
     void bind_main_window_events() {
 
+        MAIN.bind( "get_version_number", []( webui::window::event* e ) { e->return_string( STELARE_VERSION ); } );
+        MAIN.bind( "need_to_update", []( webui::window::event *e ){ e->return_bool( need_to_update ); } );
+
         for ( auto& package: PACKAGES ) {
-            if ( package.callbacks.size() >= 1 ) {
+            if ( package.callbacks.size() >= 1 && package.category != Package_Category::Essentials ) {
                 WEBUI_BINDINGS_MAP[package.name] = &package;
                 MAIN.bind( package.name, global_callback_for_packages );
             }
+        }
+
+        if ( need_to_update && PACKAGES[0].callbacks.size() >= 2 ) {
+            MAIN.bind( "new_update", [](webui::window::event* e) {
+                PACKAGES[0].callbacks[1](e);
+            } );
         }
 
     }

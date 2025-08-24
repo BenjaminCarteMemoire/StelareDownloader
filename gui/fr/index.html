@@ -10,6 +10,17 @@
   <img src="assets/images/stelare_logo.png">
 </header>
 <div class="main">
+  <div id="new_update_found" style="display:none">
+    <h2>Mise à jour.</h2>
+    <div class="separator"></div>
+    <div class="table_download">
+      <div class="table_download_row">
+        <div class="table_download_column">
+          <div id="warn_new_update"  webui-no-focus class="download_button" style="background-color:#bfb024;">Mettre à jour StelareDownloader</div>
+        </div>
+      </div>
+    </div>
+  </div>
   <h2>Télécharger un pack.</h2>
   <div class="separator"></div>
   <div class="table_download">
@@ -26,7 +37,14 @@
         <div id="finalize_kit"  webui-no-focus class="download_button">3DS / Kit applications du hack</div>
       </div>
       <div class="table_download_column">
+        <div id="true_finalize_kit"  webui-no-focus class="download_button">3DS / Finalisation du hack</div>
+      </div>
+    </div>
+    <div class="table_download_row">
+      <div class="table_download_column">
         <div id="wilbrand"  webui-no-focus class="download_button">Wii / Wilbrand</div>
+      </div>
+      <div class="table_download_column">
       </div>
     </div>
   </div>
@@ -55,6 +73,9 @@
     </div>
   </div>
 </div>
+<footer>
+  <span id="version_number" style="display:block;color:#fff;text-align:right;margin-top:1%;margin-bottom:1%;"></span>
+</footer>
 <script src="./webui.js"></script>
 <script src="assets/js/script.js"></script>
 </body>

@@ -2,6 +2,7 @@
 setlocal
 
 REM ========= CONFIGURATION =========
+set FAVICON_RES_FILE=ressource.res
 set SRC_DIR=src
 set INCLUDE_DIR=include
 set WEBUI_DIR=lib\webui
@@ -43,7 +44,7 @@ set LIBS=^
 
 REM ========= BUILD =========
 echo Compiling...
-cl %CFLAGS% %DEFINES% %SOURCES% %INCLUDES% /Fe%OUT_EXE% /Fo"%OUT_OBJ%" /link %LIBS%
+cl %CFLAGS% %DEFINES% %SOURCES% %INCLUDES% %FAVICON_RES_FILE% /Fe%OUT_EXE% /Fo"%OUT_OBJ%" /link %LIBS%
 
 endlocal
 pause

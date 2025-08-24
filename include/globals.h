@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include "class_packages.h"
 
+const inline std::string STELARE_VERSION = "0.3.1";
+
 // Control values.
 
 #if defined(_WIN32) || defined(_WIN64)

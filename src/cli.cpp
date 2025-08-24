@@ -52,6 +52,9 @@ namespace CLI {
 
     void start() {
 
+        if ( need_to_update )
+            CLI::update();
+
         while ( true ) {
 
             CLI_Tools::clear();
@@ -75,9 +78,29 @@ namespace CLI {
 
     }
 
+    void update() {
+
+        CLI_Tools::clear();
+        CLI_Tools::header();
+
+        std::cout << "Une nouvelle mise à jour de StelareDownloader est disponible, voulez-vous la télécharger ?" << std::endl;
+
+        char c;
+        std::cout << "Voulez-vous mettre à jour ? [o/N] ";
+        std::cin >> c;
+
+        if ( c == 'o' || c == 'O' || c == 'y' || c == 'Y' ) {
+            if ( PACKAGES[0].callbacks.size() >= 2 )
+                PACKAGES[0].callbacks[1]({});
+        }
+
+    }
+
     char select_pack() {
 
         char select;
+
+        std::cout << "v" << STELARE_VERSION << std::endl;
 
         std::cout << "Télécharger un paquet." << std::endl << std::endl;
         for ( auto package: PACKAGES ) {

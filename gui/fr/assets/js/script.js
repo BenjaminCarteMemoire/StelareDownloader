@@ -33,6 +33,8 @@ window.addEventListener('DOMContentLoaded', () => {
         if( window.location.href.includes( "index.html" ) ){
 
             handle_warnings_button();
+            get_version_number();
+            need_to_update();
 
         }
 
@@ -67,7 +69,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function handle_warnings_button(){
 
-        const elements = { "warn_clear_cache": "clear_cache" };
+        const elements = { "warn_clear_cache": "clear_cache", "warn_new_update": "new_update" };
 
         for( const [key, value] of Object.entries(elements)){
             document.getElementById(key).onclick = function(e){
@@ -78,6 +80,23 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+    }
+
+    function get_version_number(){
+
+        webui.call( "get_version_number" ).then( response => {
+            console.log( response );
+           document.getElementById( "version_number").innerHTML = response;
+        });
+
+    }
+
+    function need_to_update(){
+
+        webui.call( "need_to_update" ).then( response => {
+            if( response == true )
+                document.getElementById( "new_update_found").style.display = "block";
+        });
     }
 
     function handle_explanations(){

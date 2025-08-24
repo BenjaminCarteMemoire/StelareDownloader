@@ -8,6 +8,8 @@ namespace CLI {
 
     void start();
 
+    void update();
+
     char select_pack();
 
     void warning( std::function<void(std::map<std::string, std::string> add)> callback );
