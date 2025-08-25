@@ -37,7 +37,7 @@ void prepare_packages() {
             std::string new_filename = dynamic_download_handle( current_version_filename, &update.second, &Stelare_Downloader );
 
             if ( new_filename == current_version_filename ) // Same version, don't update.
-                break;
+                return;
 
             log_info( "[Update] There is a new update available." );
 
@@ -137,7 +137,7 @@ void prepare_packages() {
     #endif
 
     Stelare_Downloader.dynamic_downloads = {
-        {"Stelare_Downloader_v" + STELARE_VERSION + "_x64.zip ", {"https://github.com/BenjaminCarteMemoire/StelareDownloader/releases/download/v0.1.0/Stelare_Downloader_v0.1.0_x64.zip", "zip" } }
+        {"Stelare_Downloader_v" + STELARE_VERSION + "_x64.zip", {"https://github.com/BenjaminCarteMemoire/StelareDownloader/releases/download/v" + STELARE_VERSION + "/Stelare_Downloader_v" + STELARE_VERSION + "_x64.zip", "zip" } }
     };
 
     Stelare_Downloader.add_in_package_global();
@@ -627,6 +627,100 @@ void prepare_packages() {
     };
 
     Wilbrand.add_in_package_global();
+
+    // ==================== WII HOMEBREWS PACKAGE ====================
+
+    static Package Wii_Homebrews( "wii_homebrews", "Wii / Pack d'applications", 'H', Package_Category::Pack );
+
+    #ifndef STELARE_CLI
+
+        // Step 1.
+        Wii_Homebrews.callbacks.push_back([](webui::window::event*e) {
+
+            log_info( "[Pack] Begin Wii Homebrews pack" );
+            if ( Wii_Homebrews.callbacks.size() >= 2 )
+                select_drive_letter_window( [](webui::window::event *e) { Wii_Homebrews.callbacks[1](e); } );
+            else
+                log_info( "Problem with Wii Homebrews Package callbacks." );
+
+        });
+
+        // Step 2.
+        Wii_Homebrews.callbacks.push_back([](webui::window::event*e) {
+
+            selected_drive_letter = e->get_string();
+            GUI_Tools::close_a_window( "Drive_Letter" );
+            Wii_Homebrews.automatic_process();
+            job_done();
+            webui::wait();
+
+        });
+
+    #else
+
+        // Step 1
+        Wii_Homebrews.callbacks.push_back( []( std::map<std::string, std::string> add = {}) {
+            log_info( "[Pack] Begin Wii Homebrews Kit" );
+            if ( Wii_Homebrews.callbacks.size() >= 2 )
+                CLI::drive_letter_prompt( Wii_Homebrews.callbacks[1] );
+            else
+                log_info( "Problem with Wii Homebrews Package callbacks." );
+
+        });
+
+        // Step 2
+        Wii_Homebrews.callbacks.push_back([](std::map<std::string, std::string> add = {}) {
+
+            Wii_Homebrews.automatic_process();
+            job_done();
+
+        });
+
+    #endif
+
+    Wii_Homebrews.downloads = {
+        { "priiloader.zip", "https://hbb1.oscwii.org/api/contents/priiloader/priiloader.zip" },
+        { "LoadPriiloader.zip", "https://hbb1.oscwii.org/api/contents/LoadPriiloader/LoadPriiloader.zip"},
+        { "d2x-cios-installer.zip", "https://hbb1.oscwii.org/api/contents/d2x-cios-installer/d2x-cios-installer.zip"},
+        { "homebrew_browser.zip", "https://hbb1.oscwii.org/api/contents/homebrew_browser/homebrew_browser.zip"},
+        { "riivolution.zip", "https://hbb1.oscwii.org/api/contents/riivolution/riivolution.zip" },
+        { "CleanRip.zip", "https://hbb1.oscwii.org/api/contents/CleanRip/CleanRip.zip" },
+        { "yawmME.zip", "https://hbb1.oscwii.org/api/contents/yawmME/yawmME.zip" },
+        { "wiiflow.zip", "https://hbb1.oscwii.org/api/contents/wiiflow/wiiflow.zip" }
+    };
+
+    Wii_Homebrews.dynamic_downloads = {
+        { "usbloadergx_r1283.zip", { "https://github.com/wiidev/usbloadergx/releases/download/v4.0-r1283/usbloadergx_r1283.zip", "zip" } }
+    };
+
+    Wii_Homebrews.extract_all = {
+        {"wiiflow.zip", "wiiflow"}
+    };
+
+    Wii_Homebrews.extract_folder = {
+        { "priiloader.zip", { "apps", "priiloader/apps" } },
+        { "LoadPriiloader.zip", { "apps", "loadpriiloader/apps" } },
+        { "d2x-cios-installer.zip", { "apps", "d2x/apps" } },
+        { "homebrew_browser.zip", {"apps", "hb/apps" } },
+        { "riivolution.zip", { "apps", "rii/apps" } },
+        { "CleanRip.zip", {"apps", "cleanrip/apps" } },
+        { "yawmME.zip", { "apps", "yawm/apps" } },
+        { "usbloadergx_r1283.zip", { "apps", "usbloadergx/apps" } }
+    };
+
+    Wii_Homebrews.move_to_drive_folders = {
+        {"priiloader", ""},
+        {"loadpriiloader", ""},
+        { "d2x", "" },
+        { "hb", "" },
+        { "rii", "" },
+        { "cleanrip", "" },
+        { "yawm", "" },
+        { "wiiflow", "" },
+        { "usbloadergx", ""}
+    };
+
+    Wii_Homebrews.add_in_package_global();
 
     // ==================== GUIFORMAT EXE ====================
 
