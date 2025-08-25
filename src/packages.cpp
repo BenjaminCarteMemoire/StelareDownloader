@@ -752,6 +752,40 @@ void prepare_packages() {
 
     GUIFormat.add_in_package_global();
 
+    // ==================== WII BACKUP MANAGER EXE ====================
+
+    static Package Wii_Backup_Manager( "wii_backup_manager", "Wii Backup Manager", 'B', Package_Category::Exe );
+
+    #ifndef STELARE_CLI
+
+        Wii_Backup_Manager.callbacks.push_back([]( webui::window::event *e ) {
+            Wii_Backup_Manager.automatic_process();
+            job_done();
+        });
+
+    #else
+
+        Wii_Backup_Manager.callbacks.push_back([](std::map<std::string, std::string> add = {}) {
+            Wii_Backup_Manager.automatic_process();
+            job_done();
+        });
+
+    #endif
+
+    Wii_Backup_Manager.downloads = {
+        {"WiiBackupManager_0.4.5_Build76.zip", "https://stelare.org/assets/stelare/tutorials/wii_backup_manager/WiiBackupManager_0.4.5_Build76.zip"}
+    };
+
+    Wii_Backup_Manager.extract_all = {
+        { "WiiBackupManager_0.4.5_Build76.zip", "wii_backup_manager" }
+    };
+
+    Wii_Backup_Manager.move_folder_to_executables = {
+        "wii_backup_manager"
+    };
+
+    Wii_Backup_Manager.add_in_package_global();
+
     // ==================== CLEAR CACHE TOOL ====================
 
     static Package Clear_Cache( "clear_cache", "Vider le cache / backup / exécutable", 'C', Package_Category::Tools );

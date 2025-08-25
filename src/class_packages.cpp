@@ -98,6 +98,15 @@ void Package::automatic_process() {
         }
     }
 
+    // Move folder to executables...
+    if ( !this->move_folder_to_executables.empty() ) {
+        for ( std::string move_to_executable : this->move_folder_to_executables ) {
+            real_filename = this->filename_replacer( move_to_executable );
+            change_status( _( "package_move_exe" ) + real_filename );
+            Storage::move_folder_to_executables( real_filename );
+        }
+    }
+
     if ( selected_drive_letter != "" ) {
 
         if ( !this->move_to_drive_files.empty() ) {

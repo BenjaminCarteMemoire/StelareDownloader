@@ -130,6 +130,11 @@ class Package {
         std::vector<std::string> move_to_executables = {};
 
         /**
+        * All files needed to be moved from TEMP to EXECUTABLES
+        */
+        std::vector<std::string> move_folder_to_executables = {};
+
+        /**
          * All files in temp needed to be moved in the drive.
          *
          * key : File path in TEMP folder.

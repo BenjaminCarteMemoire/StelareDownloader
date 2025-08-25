@@ -38,6 +38,8 @@ namespace Storage {
 
     int move_to_executables( std::string temp_file );
 
+    int move_folder_to_executables( std::string temp_folder );
+
     int clear_folder( std::string folder_name );
 
     int copy_folder_to_previous(const std::string& temp_folder_name);

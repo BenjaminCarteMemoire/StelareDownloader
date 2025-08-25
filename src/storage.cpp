@@ -387,6 +387,27 @@ namespace Storage {
 
     }
 
+    int move_folder_to_executables( std::string temp_folder ) {
+
+        if (!fs::exists( STELARE_EXE_FOLDER ) )
+            fs::create_directory( STELARE_EXE_FOLDER );
+
+        std::vector<std::string> files_in_temp_folder = get_file_list_recursively( fs::current_path().string() + "\\" + STELARE_TEMP_FOLDER + "\\" + temp_folder );
+        for ( int j = 0; j < files_in_temp_folder.size(); j++ ) {
+
+            try {
+                fs::path dest = fs::current_path() / STELARE_EXE_FOLDER / temp_folder / files_in_temp_folder[j];
+                fs::create_directories(  dest.parent_path() );
+                fs::rename( fs::current_path().string() + "\\" + STELARE_TEMP_FOLDER + "\\" + temp_folder + "/" + files_in_temp_folder[j], fs::current_path().string() + "\\" + STELARE_EXE_FOLDER + "\\" + temp_folder + "/" + files_in_temp_folder[j] );
+            } catch ( const fs::filesystem_error& e ) {
+                // Nothing
+            }
+
+        }
+        return 0;
+
+    }
+
     int clear_folder( std::string folder_name ) {
 
         if (fs::exists( folder_name ) ) {
