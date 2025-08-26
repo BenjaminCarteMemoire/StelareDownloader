@@ -2,26 +2,38 @@
 
 ## Description
 
-A Downloader helper in French for some console hacking tools and emulator tools. From Stelare website.
-Packages available : MSET9 (From official Github), Uninstall CFW scripts (3DS), Wilbrand (Easy use), Finalizing CFW install (3DS), GUIFormat.
+A download manager for console hacking utilities and emulator utilities, created by the team at Stelare.org.
 
-**If you have some DLLs problems, please install these redistribuables : https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170**
+Available packages (For now): 
 
-This executable have two variants :
- - **WEBUI Interface window** : Modern WebUI interface using the "best browser". (Mostly edge). Works on Windows 10 and 11.
- - **CLI (Command-Line Interface)** : UI in the terminal. Works on Windows 8.1 and after.
+- MSET9 (From the official Github)
+- 3DS / CFW uninstallation
+- Wii / Wilbrand
+- 3DS / Hack finalization
+- GUIFormat
+- Others will be added...
+
+**If you encounter missing DLL issues when launching the software, please install these redistributables: https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170**
+
+This software has two versions:
+
+- Web interface (WEBUI): A modern web interface using WEBUI. (Works on Windows 10 and Windows 11)
+- CLI (Command-Line Interface): Interface directly in the terminal. (Works with Windows 8.1 and later)
 
 ## Supports
 
-- Windows only for now.
-- Linux and macOS support are planified.
+Currently only supports Windows. macOS and Linux support are planned for the future.
 
 ## Build
 
-To build Webui Interface : Execute "build.bat". (Using MSVC)
-(If you have 404 error from Webui interface when opening it, copy "gui" folder in the same folder that you execute the software) 
-To build CLI Interface : Execute "build_cli.bat" or define as constant "STELARE_CLI" and add "cli.h" (And remove "gui.h"). (Using MSVC)
+To build the software in web interface:
+- Run “build.bat” with MSVC
+- Copy the “gui” folder to the same location as the generated executable.
+
+To build the software in CLI interface:
+- Run “build_cli.bat” with MSVC
+- Or define the “STELARE_CLI” constant, remove “gui.cpp/gui.h” during compilation, and add “cli.cpp/cli.h”.
 
 ## Thanks
 
-- Every persons who created each software (MSET9, Wilbrand, ...).
+- Thanks to everyone who created each of the software programs (MSET9, Wilbrand, etc.).
